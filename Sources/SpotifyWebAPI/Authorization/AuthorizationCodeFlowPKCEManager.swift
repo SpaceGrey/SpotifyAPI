@@ -579,21 +579,19 @@ public extension AuthorizationCodeFlowPKCEBackendManager {
                         Self.logger.trace("received authInfo:\n\(authInfo)")
                         
                         /*
-                         Unlike the Authorization Code Flow, a refresh token
-                         that has been obtained using the Authorization Code
-                         Flow with Proof Key for Code Exchange can be exchanged
-                         for an access token only once, after which it becomes
-                         invalid. This implies that Spotify should always return
-                         a new refresh token in addition to an access token.
+                         Spotify may omit `refresh_token` from a successful
+                         refresh response. In that case, retain the refresh
+                         token already stored by this manager. `updateFromAuthInfo`
+                         does this by replacing the stored refresh token only
+                         when the response includes a new one.
                          */
                         if authInfo.accessToken == nil ||
-                                authInfo.refreshToken == nil ||
                                 authInfo.expirationDate == nil {
                             
                             let errorMessage = """
                                 missing properties after refreshing access token \
-                                (expected access token, refresh token, \
-                                and expiration date):
+                                (expected access token and expiration date; \
+                                refresh token is optional):
                                 \(authInfo)
                                 """
                             Self.logger.error("\(errorMessage)")

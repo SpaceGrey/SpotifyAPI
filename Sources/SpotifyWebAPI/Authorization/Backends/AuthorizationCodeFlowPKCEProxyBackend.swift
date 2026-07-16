@@ -301,9 +301,10 @@ public struct AuthorizationCodeFlowPKCEProxyBackend: AuthorizationCodeFlowPKCEBa
 
      The endpoint at ``tokenRefreshURL`` must return the authorization
      information as JSON data that can be decoded into ``AuthInfo``. The
-     ``AuthInfo/accessToken``, ``AuthInfo/refreshToken``, and
-     ``AuthInfo/expirationDate`` (which can be decoded from the "expires_in"
-     JSON key) properties must be non-`nil`. For example:
+     ``AuthInfo/accessToken`` and ``AuthInfo/expirationDate`` (which can be
+     decoded from the "expires_in" JSON key) properties must be non-`nil`.
+     Spotify may omit ``AuthInfo/refreshToken``; the authorization manager
+     retains its existing refresh token when that happens. For example:
 
      ```
      {

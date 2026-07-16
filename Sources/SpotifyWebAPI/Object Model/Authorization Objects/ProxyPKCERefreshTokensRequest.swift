@@ -2,13 +2,10 @@ import Foundation
 
 /**
  Used during the Authorization Code Flow with Proof Key for Code Exchange
- to retrieve a new access token and refresh token using the refresh token.
+ to retrieve a new access token using the refresh token.
 
- Unlike the Authorization Code Flow, a refresh token that has been obtained
- using the Authorization Code Flow with Proof Key for Code Exchange can be
- exchanged for an access token only once, after which it becomes invalid. This
- implies that Spotify should always return a new refresh token in addition to an
- access token.
+ Spotify can include a replacement refresh token in its response. If it omits
+ one, continue using the refresh token that was used for the request.
  
  When creating a type that conforms to ``AuthorizationCodeFlowPKCEBackend`` and
  which communicates with a custom backend server, use this type in the body of
